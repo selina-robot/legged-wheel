@@ -37,8 +37,31 @@ wheel_forward_sign:
 
 # Filled by audit_mjcf.py (spec §13): wheel_radius, torque limits, dq limits,
 # joint ranges, total mass, friction.
-model_params: {}
-
+model_params:
+  # Frozen by python/model/audit_mjcf.py from the official MJCF.
+  total_mass: 19.1264
+  wheel_radius: 0.086019
+  joint_range:
+    hip: [-1.0472, 1.0472]
+    thigh_front: [-1.5708, 3.4907]
+    thigh_back: [-0.5236, 4.5379]
+    calf: [-2.7227, -0.83776]
+    wheel: null  # unlimited
+  torque_limit:
+    hip: 23.7
+    thigh: 23.7
+    calf: 45.43
+    wheel: 15
+  dq_limit: null  # not specified in the MJCF
+  contact_friction:  # wheel "foot" class geom; the wheel also carries a
+    # frictionless condim-1 shell, and the floor uses MuJoCo defaults.
+    tangential: 0.8
+    torsional: 0.02
+    rolling: 0.01
+    condim: 6
+  joint_damping: 0.1
+  joint_armature: 0.01
+  joint_frictionloss: 0.2
 # Nominal four-wheel crouched initial pose (spec §16), 16 joint values in SDK order.
 # Geometry verified with Pinocchio FK: base height ~0.32 m, all four wheels on
 # the ground (thigh=0.9, calf=-1.8 within MJCF ranges).

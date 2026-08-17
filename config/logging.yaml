@@ -1,0 +1,9 @@
+# Logging (spec §71-§73). Every run writes artifacts/logs/<timestamp>/ with
+# config_snapshot.yaml, git_hash.txt, third_party.lock, run.csv, events.csv,
+# metrics.json. run.csv is recorded at 500 Hz; fields per spec §71.
+logging:
+  rate_hz: 500
+  output_dir: artifacts/logs
+  run_csv_fields: spec71     # see doc §71 for the authoritative field list
+  metrics_json: true
+  auto_plots: true           # python/analysis/make_report.py, spec §72

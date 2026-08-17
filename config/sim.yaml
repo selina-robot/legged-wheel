@@ -1,0 +1,24 @@
+# Simulator config (spec §7, §10, §15).
+backend:
+  type: unitree_lowlevel
+  domain_id: 1        # 1 = MuJoCo simulation, 0 = future hardware
+  interface: lo       # lo = simulation, eth0 = future hardware
+
+simulator:
+  robot: go2w
+  scene: scene.xml
+  # If the official scene timestep is not 0.001 s, use config/sim_scene_go2w.xml
+  # (only timestep/ground/camera/sensor may be overridden, spec §15).
+
+rates:
+  physics_hz: 1000
+  command_hz: 500
+
+# Fixed initial condition (spec §16). V1 is deterministic, no randomization.
+initial:
+  base_xy: [0.0, 0.0]
+  yaw: 0.0
+  linear_velocity: [0.0, 0.0, 0.0]
+  angular_velocity: [0.0, 0.0, 0.0]
+  joint_velocity: 0
+  seed: 1

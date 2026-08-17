@@ -1,0 +1,18 @@
+# FSM (spec §63-§68). Five code states: PASSIVE, PREPARE, RISE, CAPTURE, BALANCE.
+fsm:
+  prepare:
+    duration_s: 0.4          # quintic interpolation 0.3-0.5 s (spec §64)
+    timeout_s: 1.0
+    exit_joint_rms_rad: 0.03
+    exit_roll_deg: 3.0
+    exit_yaw_deg: 3.0
+    exit_stable_ms: 100
+  rise:
+    terminal_hold_max_ms: 150   # spec §65
+  capture:
+    duration_s: 0.20            # 0.15-0.30 s smoothstep blend (spec §66)
+    exit_stable_ms: 100
+  balance:
+    hold_s: 20.0                # Gate 3 / Gate 5 requirement
+  contact_transition:
+    force_ramp_knots: 3         # release_knot-3 .. release_knot (spec §68)

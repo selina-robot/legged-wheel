@@ -1,0 +1,27 @@
+# WBC task weights, starting values (spec §56). Do not sweep all at once.
+wbc:
+  base_orientation: 100.0
+  base_angular_velocity: 20.0
+  com_position: 30.0
+  com_velocity: 10.0
+  joint_posture: 20.0
+  joint_velocity: 5.0
+  contact_force_ref: 1.0
+  torque_ref: 0.5
+  ddq_regularization: 0.01
+  force_regularization: 0.001
+  tau_regularization: 0.001
+
+# BALANCE phase: sagittal pitch authority belongs to the LQR (spec §58).
+balance_pitch_weight: 0.0
+
+# Rolling-contact Baumgarte stabilization (spec §54.2), small values.
+contact_stabilization:
+  kp: 10.0
+  kd: 2.0
+
+qp:
+  solver: proxqp
+  warm_start: true
+  budget_ms: 2.0
+  p99_gate_ms: 1.5

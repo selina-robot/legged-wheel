@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "go2w_standup"
+version = "0.1.0"
+description = "Go2W rear-wheel stand-up control engineering (V1)"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "scipy",
+    "pandas",
+    "matplotlib",
+    "pyyaml",
+    "casadi==3.7.2",
+]
+
+[tool.setuptools.packages.find]
+where = ["python"]

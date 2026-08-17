@@ -1,0 +1,19 @@
+# Control rates and joint impedance (spec §15, §24).
+rates:
+  impedance_hz: 500
+  wbc_hz: 500
+  lqr_hz: 500
+  fsm_hz: 500
+  logger_hz: 500
+
+# Initial impedance gains for the 12 leg joints (spec §24). Only small sweeps
+# x[0.7, 1.0, 1.3] are allowed; never use huge Kp to mask model errors.
+impedance:
+  hip:   {kp: 30.0, kd: 1.5}
+  thigh: {kp: 35.0, kd: 2.0}
+  calf:  {kp: 35.0, kd: 2.0}
+
+# Wheel joints: never position-hold (spec §24).
+wheel:
+  kp: 0.0
+  kd: 0.0

@@ -1,0 +1,9 @@
+# Final rear-wheel stand pose target. Produced by
+# python/equilibrium/solve_rear_equilibrium.py -> data/equilibrium/rear_equilibrium.yaml.
+# This file only holds the phase-level references, not duplicated dynamics data.
+final_pose:
+  source: data/equilibrium/rear_equilibrium.yaml
+  front_wheel_clearance_min_m: 0.05   # spec §20.2
+  com_axle_tolerance_m: 0.005         # spec §20.8
+  torque_utilization_max: 0.70        # spec §20.7
+  friction_utilization_max: 0.70      # spec §22

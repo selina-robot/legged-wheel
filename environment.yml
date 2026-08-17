@@ -1,0 +1,21 @@
+name: locowheel
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - eigen
+  - boost
+  - pandas
+  - pinocchio=4.0.0
+  - proxsuite
+  - fmt
+  - glfw
+  - libgl-devel
+  - yaml-cpp
+  - gcc_linux-64
+  - gxx_linux-64
+  - pip:
+      - casadi==3.7.2
+      - mujoco==3.3.6
+      - pytest

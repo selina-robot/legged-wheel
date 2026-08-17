@@ -1,0 +1,8 @@
+unitree_mujoco:
+  url: https://github.com/unitreerobotics/unitree_mujoco.git
+  commit: ae6a8403e272733e9996ef59990880330496177f
+
+unitree_sdk2:
+  url: https://github.com/unitreerobotics/unitree_sdk2.git
+  tag: 2.0.2
+  commit: 21d0a3b2c46ee48c8fdf2783becb6be3beb0a59b

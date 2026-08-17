@@ -1,0 +1,14 @@
+build/
+artifacts/logs/
+artifacts/plots/
+artifacts/videos/
+artifacts/reports/
+data/equilibrium/*
+data/identification/*
+data/trajectories/*
+data/capture_basin/*
+!data/**/.gitkeep
+__pycache__/
+*.pyc
+.pytest_cache/
+third_party/install/

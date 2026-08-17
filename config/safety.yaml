@@ -1,0 +1,13 @@
+# Safety supervisor abort conditions (spec §62). Runs every 500 Hz cycle
+# before any command is sent. Abort -> PASSIVE/DAMPING.
+safety:
+  state_timeout_s: 5.0
+  base_roll_abort_deg: 20.0
+  base_yaw_abort_deg: 25.0
+  qp_infeasible_consecutive: 10
+  lqr_persistent_saturation_ms: 100
+  check_nan: true
+  check_joint_hard_limits: true
+  check_torque_hard_limits: true
+  check_base_height: true
+  check_self_collision: true

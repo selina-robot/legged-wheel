@@ -1,0 +1,44 @@
+# Offline trajectory optimization (spec §33-§49).
+trajopt:
+  duration: 1.50
+  knots: 61                  # dt = 1.50/60 = 0.025 s
+  release_knot: 18           # k=0..18 four-wheel contact, k=19..60 rear-only
+
+solver:
+  name: ipopt
+  max_iter: 3000
+  tol: 1.0e-6
+  acceptable_tol: 1.0e-4
+  print_level: 5
+  linear_solver: mumps
+  warm_start: true
+
+# Residual normalization scales (spec §44).
+scale:
+  joint_rad: 0.5
+  joint_vel: 2.0
+  base_pos_m: 0.10
+  base_angle_rad: 0.20
+  base_vel: 1.0
+  torque: use_tau_limit
+  force: total_mass_times_g
+  accel: 20.0
+
+# Initial dimensionless cost weights (spec §44).
+cost:
+  terminal_capture: 1000.0
+  final_leg_pose: 200.0
+  base_progress: 10.0
+  joint_posture: 1.0
+  torque: 0.02
+  contact_force: 0.01
+  acceleration: 0.02
+  torque_smoothness: 0.5
+  force_smoothness: 0.5
+
+limits:
+  torque_scale: 0.80         # |tau| <= 0.80 * tau_limit (spec §41)
+  velocity_scale: 0.80
+  joint_margin_deg: 5.0      # hip/thigh/calf (spec §42)
+  friction_scale: 0.80       # mu_eff = 0.8 * model_mu (spec §40)
+  preload_fz_min: 5.0        # N, first knots only (spec §40)

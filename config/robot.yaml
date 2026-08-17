@@ -1,0 +1,43 @@
+# Go2W robot definition. Values here are either fixed by the spec or filled in
+# by python/model/audit_mjcf.py (Gate 1). Do NOT hand-tune audited values.
+mjcf_path: third_party/unitree_mujoco/unitree_robots/go2w/go2w.xml
+
+num_actuated_joints: 16
+
+# SDK index -> canonical joint name (spec §11). wheel_forward_sign is verified
+# by Gate 1 (python/model/verify_joint_map.py) and frozen afterwards.
+joint_map:
+  0:  {name: FR_hip_joint,   leg: FR, type: hip}
+  1:  {name: FR_thigh_joint, leg: FR, type: thigh}
+  2:  {name: FR_calf_joint,  leg: FR, type: calf}
+  3:  {name: FL_hip_joint,   leg: FL, type: hip}
+  4:  {name: FL_thigh_joint, leg: FL, type: thigh}
+  5:  {name: FL_calf_joint,  leg: FL, type: calf}
+  6:  {name: RR_hip_joint,   leg: RR, type: hip}
+  7:  {name: RR_thigh_joint, leg: RR, type: thigh}
+  8:  {name: RR_calf_joint,  leg: RR, type: calf}
+  9:  {name: RL_hip_joint,   leg: RL, type: hip}
+  10: {name: RL_thigh_joint, leg: RL, type: thigh}
+  11: {name: RL_calf_joint,  leg: RL, type: calf}
+  12: {name: FR_wheel_joint, leg: FR, type: wheel}
+  13: {name: FL_wheel_joint, leg: FL, type: wheel}
+  14: {name: RR_wheel_joint, leg: RR, type: wheel}
+  15: {name: RL_wheel_joint, leg: RL, type: wheel}
+
+# Verified by Gate 1 smoke test; placeholder until then.
+wheel_forward_sign:
+  FR: 1
+  FL: 1
+  RR: 1
+  RL: 1
+
+# Filled by audit_mjcf.py (spec §13): wheel_radius, torque limits, dq limits,
+# joint ranges, total mass, friction.
+model_params: {}
+
+# Nominal four-wheel crouched initial pose (spec §16), 16 joint values in SDK order.
+# Placeholder zeros; refined in Phase 1 from the MJCF keyframe/audit.
+q_init: [0.0, 0.0, 0.0,  0.0, 0.0, 0.0,  0.0, 0.0, 0.0,  0.0, 0.0, 0.0,  0.0, 0.0, 0.0, 0.0]
+
+# Symmetric nominal hip abduction used by equilibrium/trajopt hard constraints (spec §20.4/§39).
+hip_abduction_nominal: 0.0

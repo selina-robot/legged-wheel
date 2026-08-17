@@ -68,7 +68,7 @@ def skew(v):
     )
 
 
-def main() -> int:
+def main(pitch_min=-1.57, out_yaml=OUT_YAML) -> int:
     robot_cfg = load_robot_config()
     trajopt_cfg = load_yaml("config/trajopt.yaml")
     mp = robot_cfg["model_params"]
@@ -186,7 +186,7 @@ def main() -> int:
         lbg_in.append(0.0); ubg_in.append(ca.inf)
 
     # ---- variable bounds ----
-    lbx = [-1.0, 0.15, -1.57]  # bx, bz, th (pitch: allow near-vertical)
+    lbx = [-1.0, 0.15, pitch_min]  # bx, bz, th (pitch: down to near-vertical)
     ubx = [1.0, 0.9, 0.2]
     for name in ("FR_thigh_joint", "FR_calf_joint", "RR_thigh_joint", "RR_calf_joint"):
         lo, hi = jrange[name]
@@ -295,10 +295,11 @@ def main() -> int:
         },
         "units": {"q": "rad", "tau": "Nm", "force": "N"},
     }
-    OUT_YAML.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUT_YAML, "w") as fp:
+    out_yaml = Path(out_yaml)
+    out_yaml.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_yaml, "w") as fp:
         yaml.safe_dump(out, fp, sort_keys=False)
-    print(f"[equilibrium] wrote {OUT_YAML}")
+    print(f"[equilibrium] wrote {out_yaml}")
     print(f"[equilibrium] solver: {out['solver_status']}")
     print(f"[equilibrium] base: x={bx_:.4f} z={bz_:.4f} pitch={th_:.4f}")
     print(f"[equilibrium] legs: front thigh/calf=({thf_:.3f},{caf_:.3f}) "
@@ -314,4 +315,12 @@ def _skew_np(v):
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--pitch-min", type=float, default=-1.57,
+                    help="lower bound on base pitch (rad); the balance "
+                         "working point (default -1.57 = vertical)")
+    ap.add_argument("--out", default=str(OUT_YAML))
+    args = ap.parse_args()
+    sys.exit(main(pitch_min=args.pitch_min, out_yaml=repo_path(args.out)
+                  if not Path(args.out).is_absolute() else Path(args.out)))

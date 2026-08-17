@@ -6,8 +6,12 @@ state_scale:
   wheel_displacement_m: 0.20
   wheel_velocity_mps: 1.0
 
-# Initial LQR weights on the normalized state (spec §28).
-Q: [50.0, 5.0, 1.0, 2.0]
+# LQR weights on the normalized state. Spec §28 initial Q=[50,5,1,2], R=0.2.
+# After Gate-3 diagnosis (leg-compliance phase lag made the plant oscillate;
+# s-channel gains from spurious theta<->s couplings destabilized the loop;
+# see artifacts/reports + tests), the working weights (final, after a 2D scan of Q_rate x Q_s on the
+# real plant; each change verified individually) are:
+Q: [50.0, 65.0, 0.8, 1.6]
 R: [0.2]
 
 # Wheel torque saturation = torque_saturation_scale * actual wheel torque limit
@@ -15,8 +19,17 @@ R: [0.2]
 torque_saturation_scale: 0.60
 
 # Filled by export_lqr.py after identification + design.
-A: []
-B: []
-K: []
-x_eq: []
-u_limit: 0.0
+A:
+  - [1.0000659, 0.0019988351, 4.2456383e-05, -1.7395121e-05]
+  - [0.035676438, 0.99807309, 0, -0.0086161119]
+  - [-3.5509348e-05, 5.0574789e-07, 0.99997656, 0.0019423945]
+  - [0, -0.0052684175, -0.025727914, 0.96803759]
+B:
+  - [-3.5378207e-06]
+  - [-0.0017852631]
+  - [8.495185e-06]
+  - [0.0042560049]
+K:
+  - [-107.14619, -21.887104, -3.1856154, 2.7967638]
+x_eq: [-1.5699994, 0, 0, 0]
+u_limit: 9

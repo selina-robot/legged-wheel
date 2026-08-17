@@ -4,27 +4,31 @@ mjcf_path: third_party/unitree_mujoco/unitree_robots/go2w/go2w.xml
 
 num_actuated_joints: 16
 
-# SDK index -> canonical joint name (spec §11). wheel_forward_sign is verified
-# by Gate 1 (python/model/verify_joint_map.py) and frozen afterwards.
+# axis comes from go2w.xml (hip joints: class "abduction" axis="1 0 0";
+# thigh/calf/wheel: default axis="0 1 0"). wheel_forward_sign is verified
+# by Gate 1 (src/app/lowlevel_io_smoke_test.cpp) and frozen afterwards.
 joint_map:
-  0:  {name: FR_hip_joint,   leg: FR, type: hip}
-  1:  {name: FR_thigh_joint, leg: FR, type: thigh}
-  2:  {name: FR_calf_joint,  leg: FR, type: calf}
-  3:  {name: FL_hip_joint,   leg: FL, type: hip}
-  4:  {name: FL_thigh_joint, leg: FL, type: thigh}
-  5:  {name: FL_calf_joint,  leg: FL, type: calf}
-  6:  {name: RR_hip_joint,   leg: RR, type: hip}
-  7:  {name: RR_thigh_joint, leg: RR, type: thigh}
-  8:  {name: RR_calf_joint,  leg: RR, type: calf}
-  9:  {name: RL_hip_joint,   leg: RL, type: hip}
-  10: {name: RL_thigh_joint, leg: RL, type: thigh}
-  11: {name: RL_calf_joint,  leg: RL, type: calf}
-  12: {name: FR_wheel_joint, leg: FR, type: wheel}
-  13: {name: FL_wheel_joint, leg: FL, type: wheel}
-  14: {name: RR_wheel_joint, leg: RR, type: wheel}
-  15: {name: RL_wheel_joint, leg: RL, type: wheel}
+  0:  {name: FR_hip_joint,   leg: FR, type: hip,   axis: "1 0 0"}
+  1:  {name: FR_thigh_joint, leg: FR, type: thigh, axis: "0 1 0"}
+  2:  {name: FR_calf_joint,  leg: FR, type: calf,  axis: "0 1 0"}
+  3:  {name: FL_hip_joint,   leg: FL, type: hip,   axis: "1 0 0"}
+  4:  {name: FL_thigh_joint, leg: FL, type: thigh, axis: "0 1 0"}
+  5:  {name: FL_calf_joint,  leg: FL, type: calf,  axis: "0 1 0"}
+  6:  {name: RR_hip_joint,   leg: RR, type: hip,   axis: "1 0 0"}
+  7:  {name: RR_thigh_joint, leg: RR, type: thigh, axis: "0 1 0"}
+  8:  {name: RR_calf_joint,  leg: RR, type: calf,  axis: "0 1 0"}
+  9:  {name: RL_hip_joint,   leg: RL, type: hip,   axis: "1 0 0"}
+  10: {name: RL_thigh_joint, leg: RL, type: thigh, axis: "0 1 0"}
+  11: {name: RL_calf_joint,  leg: RL, type: calf,  axis: "0 1 0"}
+  12: {name: FR_wheel_joint, leg: FR, type: wheel, axis: "0 1 0"}
+  13: {name: FL_wheel_joint, leg: FL, type: wheel, axis: "0 1 0"}
+  14: {name: RR_wheel_joint, leg: RR, type: wheel, axis: "0 1 0"}
+  15: {name: RL_wheel_joint, leg: RL, type: wheel, axis: "0 1 0"}
 
-# Verified by Gate 1 smoke test; placeholder until then.
+# Verified by the Gate 1 smoke test (free-fall spin + grounded thigh-torque
+# response, artifacts/reports/model_audit/joint_map.csv): all four wheel axes
+# are +y in the base frame (go2w.xml FK), so positive motor torque drives the
+# robot forward for every wheel.
 wheel_forward_sign:
   FR: 1
   FL: 1
@@ -36,8 +40,9 @@ wheel_forward_sign:
 model_params: {}
 
 # Nominal four-wheel crouched initial pose (spec §16), 16 joint values in SDK order.
-# Placeholder zeros; refined in Phase 1 from the MJCF keyframe/audit.
-q_init: [0.0, 0.0, 0.0,  0.0, 0.0, 0.0,  0.0, 0.0, 0.0,  0.0, 0.0, 0.0,  0.0, 0.0, 0.0, 0.0]
+# Geometry verified with Pinocchio FK: base height ~0.32 m, all four wheels on
+# the ground (thigh=0.9, calf=-1.8 within MJCF ranges).
+q_init: [0.0, 0.9, -1.8,  0.0, 0.9, -1.8,  0.0, 0.9, -1.8,  0.0, 0.9, -1.8,  0.0, 0.0, 0.0, 0.0]
 
 # Symmetric nominal hip abduction used by equilibrium/trajopt hard constraints (spec §20.4/§39).
 hip_abduction_nominal: 0.0

@@ -20,7 +20,7 @@ include_directories(include)
 
 # Library sources grow per phase; only create the target when sources exist.
 file(GLOB_RECURSE GO2W_SOURCES CONFIGURE_DEPENDS
-  src/backend/*.cpp src/estimation/*.cpp src/control/*.cpp
+  src/backend/*.cpp src/core/*.cpp src/estimation/*.cpp src/control/*.cpp
   src/trajectory/*.cpp src/fsm/*.cpp src/safety/*.cpp)
 
 if(GO2W_SOURCES)

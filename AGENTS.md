@@ -28,6 +28,7 @@
 - conda 环境：`locowheel`（`conda activate locowheel`）。
 - 构建：`./scripts/bootstrap.sh`（一次）→ `./scripts/build.sh`。
 - 运行 demo：`./scripts/run_full_demo.sh`。
+- Gate 1 关节映射测试：先 `./scripts/run_sim.sh`（需 GUI），再 `./scripts/run_io_smoke_test.sh`。该测试在自由落体阶段逐电机施加 ±0.5 Nm 脉冲，并通过 `tools/x11_sim_reset.c`（XTest 向 MuJoCo 窗口发送 BACKSPACE）触发 `mj_resetData`，每电机两次 reset。
 - 第三方依赖锁定在 `THIRD_PARTY.lock`，不要升级。
 
 ## Gate 顺序
